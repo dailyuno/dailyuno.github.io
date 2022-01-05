@@ -33,6 +33,8 @@ Hooks을 조합하여 새로운 커스텀 Hook을 만들어 낼 수도 있어서
 
 Hooks을 사용할 경우, constructor와 중복 사용해야 하는 Life cycle method등과 같은 불필요한 규칙을 준수할 필요가 없어서, 코드의 중복을 줄일 수 있다.
 
+## Hooks의 문제점
+
 ## Hooks의 종류
 
 #### 기본 Hook

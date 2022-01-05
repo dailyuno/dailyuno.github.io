@@ -20,7 +20,11 @@ module.exports = {
           {
             text: "Hooks",
             links: "/react/hooks/init.md",
-            children: ["/react/hooks/init.md", "/react/hooks/use-state.md"],
+            children: [
+              "/react/hooks/init.md",
+              "/react/hooks/use-state.md",
+              "/react/hooks/use-effect.md",
+            ],
           },
         ],
       },
