@@ -1,5 +1,5 @@
 ---
-title: Hooks이란?
+title: Hooks
 date: 2022-01-05
 ---
 
