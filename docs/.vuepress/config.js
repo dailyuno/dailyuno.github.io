@@ -37,6 +37,8 @@ module.exports = {
           "/react/hooks/use-effect.md",
           "/react/hooks/use-context.md",
           "/react/hooks/use-ref.md",
+          "/react/hooks/use-memo.md",
+          "/react/hooks/use-callback.md",
         ],
       },
     ],
