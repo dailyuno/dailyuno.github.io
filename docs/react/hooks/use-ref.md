@@ -146,3 +146,101 @@ const Input = forwardRef(({}, ref) => {
   return <input ref={ref} />;
 });
 ```
+
+## ref에 함수 넘기기
+
+앞서 설명한 예제들은 useRef 훅으로 만들어진 객체를 DOM 요소 ref에 사용했다.
+ref에 함수를 넘길 경우, 함수는 DOM 요소가 생성되거나 사라질 때 실행된다.
+
+```javascript
+function App() {
+  const [width, setWidth] = useState(0);
+  const [height, setHeight] = useState(0);
+
+  return (
+    <div>
+      <div
+        style={{
+          width: `${width}px`,
+          height: `${height}px`,
+          backgroundColor: "red",
+        }}
+        ref={(ref) => {
+          setWidth(100);
+          setHeight(100);
+        }}
+      ></div>
+      <div>
+        <label htmlFor="width">width</label>
+        <input
+          id="width"
+          type="number"
+          value={width}
+          onInput={(e) => {
+            setWidth(e.target.value);
+          }}
+        />
+      </div>
+      <div>
+        <label htmlFor="height">height</label>
+        <input
+          id="height"
+          type="number"
+          value={height}
+          onInput={(e) => setHeight(e.target.value)}
+        />
+      </div>
+    </div>
+  );
+}
+```
+
+위 코드는 초기 width, height 값은 0으로 설정되어 있지만, div 요소가 생성되면 width, height이 100으로 설정된다.
+추가로 input을 통해 width, height을 제어할 수 있도록 코드를 작성했는데, 실제 코드를 실행해보면 div 요소의 width, height 크기가 100에서 바뀌지 않는 걸 볼 수 있다.
+
+크기가 바뀌지 않는 이유는 ref 안에 들어간 함수가 렌더링 될 때마다 새로운 함수를 만들기 때문이다. 해당 문제를 해결하기 위해서는 함수를 새로 생성하지 않도록 만들어야 한다. React Hooks의 `useCallback` 함수를 사용하면 `setSize`라는 함수가 계속 새롭게 생성되는 것을 방지할 수 있다.
+
+```javascript
+function App() {
+  const [width, setWidth] = useState(0);
+  const [height, setHeight] = useState(0);
+
+  const setSize = useCallback((ref) => {
+    setWidth(100);
+    setHeight(100);
+  }, []);
+
+  return (
+    <div>
+      <div
+        style={{
+          width: `${width}px`,
+          height: `${height}px`,
+          backgroundColor: "red",
+        }}
+        ref={setSize}
+      ></div>
+      <div>
+        <label htmlFor="width">width</label>
+        <input
+          id="width"
+          type="number"
+          value={width}
+          onInput={(e) => {
+            setWidth(e.target.value);
+          }}
+        />
+      </div>
+      <div>
+        <label htmlFor="height">height</label>
+        <input
+          id="height"
+          type="number"
+          value={height}
+          onInput={(e) => setHeight(e.target.value)}
+        />
+      </div>
+    </div>
+  );
+}
+```
