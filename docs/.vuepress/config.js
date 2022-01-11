@@ -31,6 +31,7 @@ module.exports = {
         link: "/react/init.md",
         children: [
           "/react/init.md",
+          "/react/context-api.md",
           "/react/hooks/init.md",
           "/react/hooks/use-state.md",
           "/react/hooks/use-effect.md",

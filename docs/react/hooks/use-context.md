@@ -3,138 +3,134 @@ title: useContext 사용법
 date: 2022-01-10
 ---
 
-## 콘텍스트 API가 필요한 이유
+## 들어가며
 
-부모 컴포넌트에서 자식 컴포넌트에게 데이터를 전달하기 위해서는 `속성 이름={전달 데이터}` 속성 방식으로 넘겨야 하는데,
-작은 프로젝트에서는 큰 어려움 없이 속성을 사용해서 전달이 가능하다.
+`useContext`를 설명하기 이전에 기존에 사용하던 콘텍스트 API의 문제점을 알아야 한다.
 
-다만 프로젝트의 규모가 커질 수록, 부모 컴포넌트에서 자식 컴포넌트간의 거리(깊이)가 멀어지게 되며 반복적으로 데이터 전달 코드를 작성해야 하는 문제가 발생한다.
+콘텍스트 API는 반복적인 데이터 전달 코드를 방지하고자 사용하는데, 이러한 콘텍스트 API에도 문제점이 존재한다.
+바로 `Provider`와 `Consumer`를 중첩해서 사용할 수록 코드의 깊이가 깊어진다는 점이다.
 
-### 컴포넌트 데이터 전달
+`Provider`와 `Consumer`를 중첩한 코드를 통해 어떠한 문제점이 있는지 알아보자. 
+이렇게 코드가 여러 번 중첩될 일은 드물겠지만 프로젝트의 크기가 커지면서 중첩할 일이 생기게 된다면 자식 컴포넌트 코드에서는 부모 컴포넌트에서 넘긴 데이터를 받기 위해 `Consumer` 컴포넌트를 여러 번 사용해야 하고, 코드가 점점 복잡해지고 이해하기 어려워진다.
 
-특히 아래의 구조처럼 A 컴포넌트 가진 `count`라는 데이터를 D 컴포넌트가 사용하기 위해서는 `count` 데이터를 사용하지 않는 B, C 컴포넌트에게도 데이터를 전달해야 한다. 
+```javascript
+/* 부모 컴포넌트 */
+<A.Provider>
+  <B.Provider>
+    <C.Provider>
+      <D.Provider>
+      </D.Provider>
+    </C.Provider>
+  </B.Provider>
+</A.Provider>
 
-이렇게 반복적으로 데이터 전달 코드를 작성할 뿐만 아니라, 중간에 코드가 변경될 경우 똑같이 데이터를 전달하는 컴포넌트까지 수정해야 하는 점을 생각한다면 우리는 더 나은 방법을 찾아야 한다.
-
-```markdown
-A Component (count 선언)
-    B Component
-        C Component
-            D Component (count 사용)
+/* 자식 컴포넌트 */
+<A.Consumer>
+  {data1 => (
+    <B.Consumer>
+      {data2 => (
+        <C.Consumer>
+          {data3 => (
+            <D.Consumer>
+              {data4 => (
+                /* 자식 컴포넌트 내용 */
+              )}
+            </D.Consumer>
+          )}
+        </C.Consumer>
+      )}
+    </B.Consumer>
+  )}
+</A.Consumer>
 ```
 
-### 기존 코드 문제점
+React Hooks의 종류인 `useContext`를 사용하면 `Consumer`를 사용함에 따라 코드가 깊어지는 것을 방지할 수 있다.
 
-콘텍스트 API를 사용하지 않고 작성한 코드로 `App`이 가진 데이터를 `PostTitle`와 `PostContent` 컴포넌트에게 전달하기 위해, 데이터를 직접적으로 사용하지 않는 `Post` 컴포넌트에게 의무적으로 데이터를 전달하는 문제가 있다.
+## useContext 사용
+
+`useContext`는 기존에 생성한 콘텍스트 객체를 사용해서, 데이터를 가지고 오는 함수로 `Consumer` 컴포넌트의 역할을 대신한다고 보면 된다.
+
+```javascript
+const 변수명 = useContext(콘텍스트 객체);
+```
+
+예를 들어 `App` 컴포넌트에서 `Provider`룰  3번 중첩해서 데이터를 넘기는 경우가 있다고 가정해보자. 그리고 `user`, `product`, `sale` 모든 데이터의 사용이 필요한 `ProductMeta`라는 컴포넌트가 있을 경우, `Consumer`와 `useContext`는 아래와 같이 서로 다른 방식으로 데이터를 받아오게 된다.
 
 ```javascript
 function App() {
-  const [post] = useState({
-    title: "1번 게시물 제목",
-    content: "1번 게시물 본문",
-  });
+  const [user] = useState({ name: "홍길동" });
+  const [product] = useState({ name: "상품" });
+  const [sale] = useState({ discount_rate: 7 })
 
   return (
-    <div>
-      <Post title={post.title} content={post.content}></Post>
-    </div>
-  );
+    <UserContext.Provider value={user}>
+      <ProductContext.Provider value={product}>
+        <SaleContext.Provider value={sale}>
+          <Product></Product>
+        </SaleContext.Provider>
+      </ProductContext.Provider>
+    </UserContext.Provider>
+  )
 }
 
-function Post({ title, content }) {
+function Product() {
   return (
     <div>
-      <PostTitle title={title}></PostTitle>
-      <PostContent content={content}></PostContent>
+      <ProductMeta>
+      </ProductMeta>
     </div>
-  );
-}
-
-function PostTitle({ title }) {
-  return <h2>{title}</h2>;
-}
-
-function PostContent({ content }) {
-  return <p>{content}</p>;
+  ) 
 }
 ```
 
-## 콘텍스트 API 사용하기 
+### Consumer 사용 방식
 
-반복적인 데이터 전달과 불필요한 코드 작성을 방지하기 위해서는 React에서 제공하는 콘텍스트 API를 사용하면 된다. 콘텍스트 API를 사용할 경우, `Post` 컴포넌트에 데이터를 전달하지 않고도 `PostTitle`와 `PostContent` 컴포넌트에 데이터를 전달할 수 있다.
-
-### createContext
-`createContext` 함수를 호출하여 콘텍스트 객체를 생성할 수 있으며, 객체 생성 이후 `Provider`와 `Consumer` 컴포넌트를 사용할 수 있다.
+`useContext`를 사용하지 않고 작성하던 기존 방법이다. 부모가 `Provider` 컴포넌트로 전달한 데이터를 받기 위해서는 해당 개수 만큼의 `Consumer` 컴포넌트를 사용해서 데이터를 받아와야 하는데, 아래 코드를 보면 알겠지만 코드가 깊어지고 한 눈에 알아보기 어렵다는 것을 알 수 있다.
 
 ```javascript
-/* createContext 구조 */
-React.createContext(defaultValue);
-```
-
-### Provider & Consumer
-
-부모 컴포넌트에서 `Provider`를 이용해서 전달할 데이터를 정하고, 자식 컴포넌트에서는 `Consumer`를 통해서 데이터를 받는다.
-`Consumer` 컴포넌트는 데이터를 찾기 위해서 부모 컴포넌트로 한 단계씩 올라가면서 가장 가까이 있는 `Provider` 컴포넌트를 찾는다. 
-
-최상위 컴포넌트에 도달하였는데도 `Provider` 컴포넌트가 없는 경우에는 콘텍스트 객체를 생성할 때 사용된 `defaultValue`를 사용한다. 
-
-```javascript
-const myContext = createContext(null);
-
-/* Provider 사용 예시 */
-<myContext.Provider value={전달하고자 하는 데이터}>
-</myContext.Provider>
-
-/* Consumer 사용 예시 */
-<myContext.Consumer>
-    {data => HTML 코드}
-</myContext.Consumer>
-```
-
-### 콘텍스트 API 사용 코드
-
-기존 코드의 문제점을 해결하기 위해, 콘텍스트 API를 사용한 코드로 반복적으로 자식 컴포넌트로 데이터를 전달하는 문제를 해결했다.
-
-```javascript
-const PostContext = createContext(null);
-
-function App() {
-  const [post] = useState({
-    title: "1번 게시물 제목",
-    content: "1번 게시물 본문",
-  });
-
+function ProductMeta() {
   return (
     <div>
-      <PostContext.Provider value={post}>
-        <Post></Post>
-      </PostContext.Provider>
+      <UserContext.Consumer>
+        {(user) => (
+          <ProductContext.Consumer>
+            {(product) => (
+              <SaleContext.Consumer>
+                {(sale) => (
+                  <>
+                    <div>유저 이름: {user.name}</div>
+                    <div>제품 이름: {product.name}</div>
+                    <div>할인율: {sale.discount_rate}%</div>
+                  </>
+                )}
+              </SaleContext.Consumer>
+            )}
+          </ProductContext.Consumer>
+        )}
+      </UserContext.Consumer>
     </div>
   );
 }
+```
 
-function Post() {
+### useContext 사용 방식
+
+다음은 `useContext`를 사용한 방식으로 `Consumer` 컴포넌트를 사용했을 때와 비교하면 코드가 간결하고 이해하기 쉽다.
+
+단순히 `ProductMeta` 한 개의 컴포넌트에서도 눈에 띄는 차이가 있는 만큼, 규모가 큰 프로젝트에서 `ProductMeta`와 같이 여러 개의 `Provider`로부터 데이터를 받아오는 컴포넌트가 여러 개 필요하다고 생각해보면 `Consumer` 대신 `useContext`를 사용해서 코드를 작성하는게 좋다.
+
+```javascript
+function ProductMeta() {
+  const user = useContext(UserContext);
+  const product = useContext(ProductContext);
+  const sale = useContext(SaleContext);
+
   return (
     <div>
-      <PostTitle></PostTitle>
-      <PostContent></PostContent>
+      <div>유저 이름: {user.name}</div>
+      <div>제품 이름: {product.name}</div>
+      <div>할인율: {sale.discount_rate}%</div>
     </div>
-  );
-}
-
-function PostTitle() {
-  return (
-    <PostContext.Consumer>
-      {({ title }) => <h2>{title}</h2>}
-    </PostContext.Consumer>
-  );
-}
-
-function PostContent() {
-  return (
-    <PostContext.Consumer>
-      {({ content }) => <p>{content}</p>}
-    </PostContext.Consumer>
   );
 }
 ```
