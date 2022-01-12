@@ -1,5 +1,5 @@
 ---
-title: useMemo 사용법
+title: useMemo
 date: 2022-01-11
 ---
 

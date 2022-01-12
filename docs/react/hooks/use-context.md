@@ -1,5 +1,5 @@
 ---
-title: useContext 사용법
+title: useContext
 date: 2022-01-10
 ---
 

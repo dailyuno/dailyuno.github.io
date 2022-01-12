@@ -1,5 +1,5 @@
 ---
-title: useCallback 사용법
+title: useCallback
 date: 2022-01-11
 ---
 

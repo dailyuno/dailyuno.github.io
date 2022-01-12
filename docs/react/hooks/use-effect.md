@@ -1,5 +1,5 @@
 ---
-title: useEffect 사용법
+title: useEffect
 date: 2022-01-05
 ---
 
