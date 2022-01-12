@@ -41,6 +41,11 @@ module.exports = {
           "/react/hooks/use-callback.md",
         ],
       },
+      {
+        text: "Computer Science",
+        link: "/computer-science/functional-programming.md",
+        children: ["/computer-science/functional-programming.md"],
+      },
     ],
   },
 };
