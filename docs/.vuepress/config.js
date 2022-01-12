@@ -32,6 +32,7 @@ module.exports = {
         children: [
           "/react/init.md",
           "/react/context-api.md",
+          "/react/higher-order-component.md",
           "/react/hooks/init.md",
           "/react/hooks/use-state.md",
           "/react/hooks/use-effect.md",
