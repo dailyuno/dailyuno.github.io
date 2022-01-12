@@ -24,7 +24,7 @@ module.exports = {
       {
         text: "Javascript",
         link: "/javascript/scope.md",
-        children: ["/javascript/scope.md"],
+        children: ["/javascript/scope.md", "/javascript/promise.md"],
       },
       {
         text: "React",
