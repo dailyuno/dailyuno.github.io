@@ -121,3 +121,236 @@ examplePromise.finally(() => {
   console.log("finally 메소드")
 });
 ```
+
+## Promise 처리 - 정적 메소드
+
+`Promise` 인스턴스 메소드를 통해서 처리하는 방법을 설명했다. 
+다만 여러 개의 `Promise` 객체를 다루기 위해서는 정적 메소드와 인스턴스 메소드를 함께 사용해서 처리해야 한다. 
+
+`Promise`의 정적 메소드의 종류와 사용법을 알기 위해, `timer`라는 함수를 만들었다. 
+원하는 시간을 인자로 넘길 경우, 해당 시간이 지난 이후에 호출 되는 함수로 아래 예제들에서 사용할 예정이다.
+
+```javascript
+function timer(time) {
+  return new Promise((resolve, reject) => {
+    if (time === 0) {
+      reject(time);
+    }
+
+    setTimeout(() => {
+      resolve(time);
+    }, time);
+  });
+}
+```
+
+#### Promise.all
+
+`Promise.all`은 배열에 있는 모든 함수가 성공적으로 완료되거나, 한 개의 함수가 실패할 때까지 대기한다.
+
+성공적으로 완료했을 경우, `resolve`를 통해 반환된 값을 인자로 넘긴 배열 순서에 맞게 반환한다.
+
+```javascript
+Promise.all([timer(2000), timer(1000), timer(1500)])
+  .then((res) => {
+    console.log(res); // [2000, 1000, 1500]이 넘어온다.
+  })
+  .catch((err) => {
+    console.log(err); // 작동하지 않는다.
+  });
+```
+
+`timer` 함수는 0을 인자로 넘길 경우, `reject`를 호출하도록 설계 되어 있어서, 이 경우에는 `catch` 함수 안에서 0이 출력된다.
+
+```javascript
+Promise.all([timer(1000), timer(1500), timer(0)])
+  .then((res) => {
+    console.log(res); // 오류가 발생해서 작동하지 않는다.
+  })
+  .catch((err) => {
+    console.log(err); // 0 출력
+  });
+```
+
+#### Promise.allSettled
+
+`Promise.allSettled`는 배열에 있는 모든 함수가 처리 될 때까지 대기한다.
+
+각각의 `Promise` 상태와 반환 값을 모아놓은 배열로 반환되는데, `then`을 통해서만 받을 수 있다.
+
+```javascript
+Promise.allSettled([timer(2000), timer(1000), timer(1500)])
+  .then((res) => {
+    console.log(res);
+    /* 각각의 함수 상태와 반환 값이 넘어온다.
+      [
+        { status: "fulfilled", value: 2000 },
+        { status: "fulfilled", value: 1000 },
+        { status: "fulfilled", value: 1500 },
+      ];
+    */
+  })
+  .catch((err) => {
+    console.log(err); // 작동하지 않는다.
+  });
+```
+
+아래와 같이 `reject` 함수가 호출된 경우에도 `catch`를 통해서 받지 않는다. 
+특이한 점은 `resolve` 함수로 반환 된 값은 `value`를 통해 넘어오며, `reject` 함수로 반환 된 값은 `reason`을 통해 넘어온다.
+
+```javascript
+Promise.allSettled([timer(1000), timer(1500), timer(0)])
+  .then((res) => {
+    console.log(res);
+    /* 각각의 함수 상태와 반환 값이 넘어온다.
+      [
+        { status: "fulfilled", value: 1000 },
+        { status: "fulfilled", value: 1500 },
+        { status: "rejected", reason: 0 },
+      ];
+    */
+  })
+  .catch((err) => {
+    console.log(err); // 작동하지 않는다.
+  });
+```
+
+#### Promise.any
+
+`Promise.any`는 이행한 `Promise` 처리를 위한 함수로, 배열에 있는 함수 중 하나라도 이행하면 실행된다.
+
+다른 예제와 동일하게 3개의 함수를 넘겼는데, `timer(1000)`이 먼저 완료해서, `then`에서 1000 값을 받게 된다. 만약 `timer(1000)`보다 더 빠르게 이행되는 함수가 있으면 해당 함수의 반환 값을 받게 된다.
+
+```javascript
+Promise.any([timer(2000), timer(1000), timer(1500)])
+  .then((res) => {
+    console.log(res); // 1000
+  })
+  .catch((err) => {
+    console.log(err); // 작동하지 않는다.
+  });
+```
+
+`timer(0)`이 먼저 완료 되었지만 거부 된 함수로 무시되고, 그 다음으로 먼저 이행 된 `timer(1000)`의 값을 받게 된다.
+
+```javascript
+Promise.any([timer(1000), timer(1500), timer(0)])
+  .then((res) => {
+    console.log(res); // 1000
+  })
+  .catch((err) => {
+    console.log(err); // 작동하지 않는다.
+  });
+```
+
+그렇다면 `Promise.any` 배열 안에 있는 모든 함수가 실패할 경우는 어떻게 될까? 
+
+모든 함수가 `reject` 함수를 호출하도록 `timer(0)`으로만 배열을 채워서, 실행하자 `catch` 함수가 호출되며, 모든 `Promise`가 `reject` 되었다는 메시지를 받는다.
+
+```javascript
+Promise.any([timer(0), timer(0), timer(0)])
+  .then((res) => {
+    console.log(res); // 작동하지 않는다.
+  })
+  .catch((err) => {
+    console.log(err); // AggregateError: All promises were rejected
+  });
+```
+
+#### Promise.race
+
+`Promise.race`는 배열에 있는 함수들 중 하나라도 처리되면 실행된다.
+
+아래의 경우, 모든 함수가 성공적으로 이행돼서 `Promise.any`와 동일하게 먼저 이행된 `timer(1000)`의 값을 `then`을 통해 받게 된다.
+
+```javascript
+Promise.race([timer(2000), timer(1000), timer(1500)])
+  .then((res) => {
+    console.log(res); // 1000
+  })
+  .catch((err) => {
+    console.log(err); // 작동하지 않는다.
+  });
+```
+
+`timer(0)` 함수가 실행되면서 다른 함수들보다 먼저 처리하는 `reject`를 호출해서 0의 값을 받게 된다.
+`reject`로 반환 된 값은 `catch`를 통해 받을 수 있다.
+
+```javascript
+Promise.race([timer(1000), timer(1500), timer(0)])
+  .then((res) => {
+    console.log(res); // 작동하지 않는다.
+  })
+  .catch((err) => {
+    console.log(err); // 0
+  });
+```
+
+그렇다면 여기서 궁금한 점이 생기는데, `resolve`와 `reject`를 즉시 호출하는 함수를 각각 만들고, `Promise.race` 배열에 넣으면 어떻게 될까?
+
+어찌된 영문인지는 모르겠으나, 즉시 실행해서인지 `then`과 `catch` 어떠한 곳에서도 값이 출력되지 않는 것을 확인할 수 있다.
+
+```javascript
+function resolveTimer() {
+  return new Promise((resolve, reject) => {
+    resolve("resolve timer");
+  });
+}
+
+function rejectTimer() {
+  return new Promise((resolve, reject) => {
+    reject("reject timer");
+  });
+}
+
+Promise.race([resolveTimer(), rejectTimer()])
+  .then((res) => {
+    console.log(res);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+```
+
+즉시 실행되는게 문제일 수도 있어서, `setTimeout` 함수를 통해 동일한 시간을 설정해보았다.
+
+```javascript
+function resolveTimer() {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve("resolve timer");
+    }, 1000);
+  });
+}
+
+function rejectTimer() {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      reject("reject timer");
+    }, 1000);
+  });
+}
+
+Promise.race([resolveTimer(), rejectTimer()])
+  .then((res) => {
+    console.log(res);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+```
+
+`resolveTimer`의 값이 반환 되는 걸 알 수 있는데, 혹시 배열의 순서의 차이가 실행 시점을 다르게 만들 수도 있어서 순서를 변경했다.
+
+```javascript
+Promise.race([rejectTimer(), resolveTimer()])
+  .then((res) => {
+    console.log(res);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+```
+
+배열 순서를 변경하니, `rejectTimer`의 값이 반환 되는 걸 알 수 있다. 
+실제 `Promise.race` 사용 시, 이런 일이 발생할 일은 없겠지만 동시에 함수가 호출 될 수도 있으니, 우선 순위가 높은 함수를 배열의 앞에 위치하는게 좋을 것 같다.
