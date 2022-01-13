@@ -67,6 +67,30 @@ class Board extends React.Component {
 export default withStorePageViews(Board, "Board");
 ```
 
+함수형 컴포넌트에서는 클래스 컴포넌트 방식보다 쉽게 고차 컴포넌트를 사용할 수 있다.
+다만 웬만해서는 고차 컴포넌트를 사용하는 것보다 Custom Hook을 사용하는게 좋다고 생각한다.
+
+기존 클래스형 컴포넌트에서는 라이프 사이클 메소드가 분리되어 있어서, `componentDidMount`와 `componentDidUpdate`에 중복해서 코드를 추가해야 했다. 하지만 이제는 `useEffect`를 통해 코드를 중복하지 않고 넣을 수 있으며, 직접 만든 `customHook`을 통해 별도의 `state` 설정 없이도 값을 가지고 올 수 있다.
+
+```javascript
+function withStorePageViews(WrappedComponent, componentName) {
+  const InnerComponent = (props) => {
+    useEffect(() => {
+      /* 조회수 증가 코드 */
+    }, []);
+
+    return <WrappedComponent {...props} />;
+  };
+  return InnerComponent;
+}
+
+function Board() {
+  return <div>게시판 페이지</div>;
+}
+
+export default withStorePageViews(Board, "Board");
+```
+
 ## 주의점
 
 중복되는 로직을 여러 개로 분리해서 많은 수의 고차 컴포넌트를 사용하면 렌더링 성능에 문제가 발생한다. 
