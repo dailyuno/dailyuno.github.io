@@ -55,7 +55,7 @@ module.exports = {
       {
         text: "Redux",
         link: "/redux/init.md",
-        children: ["/redux/init.md"],
+        children: ["/redux/init.md", "/redux/connect.md"],
       },
       {
         text: "Computer Science",
