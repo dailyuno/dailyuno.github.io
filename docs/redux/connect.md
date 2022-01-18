@@ -5,8 +5,8 @@ date: 2022-01-18
 
 ## 들어가며
 
-컴포넌트에서 Redux의 상태값 사용과 dispatch 함수를 실행하기 위해서는 `connect` 함수의 사용이 필요하다.
-`connect` 함수는 Redux Hooks인 `useSelector`와 `useDispatch`의 등장으로 신규 프로젝트에서는 사용할 필요가 없어졌다.
+기존에는 컴포넌트에서 Redux의 상태값 사용과 dispatch 함수를 실행하기 위해서는 `connect` 함수의 사용이 필요했는데,
+Redux Hooks인 `useSelector`와 `useDispatch`의 등장으로 신규 프로젝트에서는 사용할 필요가 없어졌다.
 
 하지만 여전히 2019년 이전에 만들어진 프로젝트의 경우, `connect` 함수를 사용해서 코드를 작성되었을 거라고 생각한다.
 기존 React 프로젝트 유지보수를 하게 된다면 `connect` 함수의 이해가 필요하다.
@@ -209,5 +209,5 @@ export default connect(mapStateToProps, mapDispatchToProps)(UserContainer);
 
 ## 주의점
 
-신규 프로젝트인 경우에는 `connect` 함수를 사용하기 보다는 `useSelector`와 `useDispatch`의 사용을 권장한다.
+앞서 이야기했던 것처럼 신규 프로젝트인 경우에는 `connect` 함수를 사용하기 보다는 `useSelector`와 `useDispatch`의 사용을 권장한다.
 해당 함수들은 React Hooks이 나온 이후 Redux에서도 기존 문제점들을 보완해서 나온 Hooks들이므로 편리하다.
