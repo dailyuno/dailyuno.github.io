@@ -47,6 +47,11 @@ module.exports = {
         ],
       },
       {
+        text: "Redux",
+        link: "/redux/init.md",
+        children: ["/redux/init.md"],
+      },
+      {
         text: "Computer Science",
         link: "/computer-science/functional-programming.md",
         children: ["/computer-science/functional-programming.md"],
