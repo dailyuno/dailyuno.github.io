@@ -37,6 +37,12 @@ module.exports = {
           "/react/init.md",
           "/react/context-api.md",
           "/react/higher-order-component.md",
+        ],
+      },
+      {
+        text: "React Hooks",
+        link: "/react/hooks/init.md",
+        children: [
           "/react/hooks/init.md",
           "/react/hooks/use-state.md",
           "/react/hooks/use-effect.md",

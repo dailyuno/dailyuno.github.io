@@ -1,5 +1,5 @@
 ---
-title: Flex란?
+title: Flex
 date: 2021-07-04
 ---
 
