@@ -15,7 +15,7 @@ Redux Hooks인 `useSelector`와 `useDispatch`의 등장으로 신규 프로젝�
 
 ## connect 알아보기
 
-`connect` 함수는 컴포넌트가 Redux store 접근해서 상태값을 사용할 수 있도록 도와주고, `dispatch` 함수를 호출할 수 있도록 Redux와 컴포넌트를 연결해주는 역할을 한다.
+`connect` 함수는 컴포넌트가 Redux 스토어에 접근해서 상태값을 사용할 수 있도록 도와주고, `dispatch` 함수를 호출할 수 있도록 Redux와 컴포넌트를 연결해주는 역할을 한다.
 
 다음과 같이 네 개의 인자를 받을 수 있다. 
 
@@ -27,8 +27,8 @@ connect(mapStateToProps, mapDispatchToProps, mergeProps, options)(component);
 
 ### mapStateToProps
 
-`mapStateToProps`는 Store의 상태가 변경될 때마다 호출되며, 두 개의 인자를 받을 수 있다.
-`state`는 store의 데이터들이며, `ownProps`는 부모 컴포넌트가 넘겨준 데이터들이다.
+`mapStateToProps`는 스토어의 상태가 변경될 때마다 호출되며, 두 개의 인자를 받을 수 있다.
+`state`는 스토어의 데이터들이며, `ownProps`는 부모 컴포넌트가 넘겨준 데이터들이다.
 
 ```javascript
 mapStateToProps(state, ownProps);

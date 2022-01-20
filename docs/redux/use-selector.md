@@ -5,9 +5,9 @@ date: 2022-01-18
 
 ## 들어가며
 
-기존에는 컴포넌트에서 store의 상태값을 사용하기 위해서는 `connect` 함수의 `mapStateToProps`을 넘겨서 props를 사용하는 방식처럼 사용했다.
+기존에는 컴포넌트에서 스토어의 상태값을 사용하기 위해서는 `connect` 함수의 `mapStateToProps`을 넘겨서 props를 사용하는 방식처럼 사용했다.
 
-이제는 react-redux 7버전 이후로 나온 `useSelector` Hook을 사용해서, 손쉽게 store에 접근하고 상태값을 가지고 올 수 있게 됐다. 
+이제는 react-redux 7버전 이후로 나온 `useSelector` Hook을 사용해서, 손쉽게 스토어에 접근하고 상태값을 가지고 올 수 있게 됐다. 
 
 `useSelector`는 `mapStateToProps`과 다른점은 다음과 같다.
 
