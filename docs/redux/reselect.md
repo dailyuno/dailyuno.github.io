@@ -1,3 +1,8 @@
+---
+title: reselect
+date: 2022-01-21
+---
+
 ## 들어가며
 
 `useSelector` 함수를 사용할 때, selector 코드를 외부로 분리하더라도, `filter`와 `map` 등을 사용하는 경우에는 상태 변화가 없더라도 selector는 계속 실행되며, 렌더링이 발생한다.
