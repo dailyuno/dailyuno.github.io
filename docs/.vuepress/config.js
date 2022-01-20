@@ -60,6 +60,7 @@ module.exports = {
           "/redux/connect.md",
           "/redux/use-dispatch.md",
           "/redux/use-selector.md",
+          "/redux/reselect.md",
         ],
       },
       {
