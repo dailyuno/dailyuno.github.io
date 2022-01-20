@@ -58,6 +58,7 @@ module.exports = {
         children: [
           "/redux/init.md",
           "/redux/connect.md",
+          "/redux/use-dispatch.md",
           "/redux/use-selector.md",
         ],
       },
