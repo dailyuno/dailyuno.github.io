@@ -55,7 +55,13 @@ module.exports = {
       {
         text: "Redux",
         link: "/redux/init.md",
-        children: ["/redux/init.md", "/redux/connect.md"],
+        children: [
+          "/redux/init.md",
+          "/redux/connect.md",
+          "/redux/use-dispatch.md",
+          "/redux/use-selector.md",
+          "/redux/reselect.md",
+        ],
       },
       {
         text: "Computer Science",

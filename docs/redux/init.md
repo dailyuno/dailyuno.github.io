@@ -98,14 +98,14 @@ Redux는 아래 그림과 같은 구조로 상태값을 관리한다.
 여기서 `View`는 사용자에게 보여지는 화면을 말하며, 컴포넌트라고 보면 된다.
 이제 앞서 나온 Redux의 Action, Middleware, Reducer, Store 네 가지 요소들이 어떤 역할을 하고, 어떻게 사용하는지 자세하게 알아보자.
 
-## Action
+## 액션 (Action)
 
-`store.dispatch(action)` 호출을 통해, Reducer를 실행할 수 있으며, action 객체는 고유한 `type` 필드를 가져야 한다. 
+`store.dispatch(action)` 호출을 통해, 리듀서를 실행할 수 있으며, 액션 객체는 고유한 `type` 필드를 가져야 한다. 
 `type` 필드의 이름은 직관적으로 볼 수 있도록 `domain/eventName` 형식으로 짓는게 좋다. domain은 해당 액션이 속한 그룹을 의미하며, eventName은 어떤 작업인지를 의미한다.
 
-그리고 action 객체는 추가로 `payload` 필드를 가질 수 있는데, 여기에는 Reducer로 넘길 정보를 입력한다고 보면 된다. 
+그리고 액션 객체는 추가로 `payload` 필드를 가질 수 있는데, 여기에는 리듀서로 넘길 정보를 입력한다고 보면 된다. 
 
-action 객체는 아래 예제의 형식과 같다.
+액션 객체는 아래 예제의 형식과 같다.
 
 ```javascript
 const addUserAction = {
@@ -119,9 +119,9 @@ const addUserAction = {
 store.dispatch(addUserAction);
 ```
 
-## Reducer
+## 리듀서 (Reducer)
 
-Reducer는 현재 상태값 state와 action 객체 이렇게 두 개의 인자를 가진다. Redux는 처음에 시작할 때, 아무런 상태도 가지고 있지 않기때문에 우리는 초기 상태를 지정해줘야 한다.
+리듀서는 현재 상태값 state와 action 객체 이렇게 두 개의 인자를 가진다. Redux는 처음에 시작할 때, 아무런 상태도 가지고 있지 않기때문에 우리는 초기 상태를 지정해줘야 한다.
 
 ```javascript
 const initialState = {
@@ -133,7 +133,7 @@ function userReducer(state = initialState, action) {
 }
 ```
 
-`store.dispatch` 함수를 통해 넘어온 객체는 action으로 분류되며, type을 통해 어떠한 작업을 할지 결정되며, 새로운 상태값을 만들거나 기존 상태값을 반환해야 한다.
+`store.dispatch` 함수를 통해 넘어온 객체는 액션으로 분류되며, 타입을 통해 어떠한 작업을 할지 결정되며, 새로운 상태값을 만들거나 기존 상태값을 반환해야 한다.
 
 ```javascript
 function userReducer(state = initialState, action) {
@@ -149,16 +149,16 @@ function userReducer(state = initialState, action) {
 여기서 주의할 점은 객체의 불변성을 유지하기 위해, 기존 객체를 복사해서 수정해야 한다.
 그리고 비동기 작업 및 `Date`, `Math.random`과 같은 랜덤한 값 사용은 하지 말아야 하며, 부수 효과가 발생하지 않도록 코드를 작성해야 한다.
 
-## Store
+## 스토어 (Store)
 
-Store는 만들어진 Reducer를 사용해 생성하며, 상태가 관리되는 공간이다.
+스토어는 만들어진 리듀서를 사용해 생성하며, 상태가 관리되는 공간이다.
 여러 컴포넌트에서 사용하거나 페이지 전환 혹은 새로고침 시 남아있어야 하는 상태값을 보관한다.
 각 컴포넌트는 상태가 필요한 경우, 큰 제약 없이 스토어에 접근해서 상태값을 가지고 올 수 있다.
 
-Store의 상태값은 Action이 실행되면 Middleware 함수를 실행하고, Reducer를 통해 만들어진 상태값으로 변경된다.
+스토어의 상태값은 액션이 실행되면 미들웨어 함수를 실행하고, 리듀서를 통해 만들어진 상태값으로 변경된다.
 
-`createStore`라는 함수를 통해, 생성할 수 있으며 생성된 store 객체는 Provider를 통해 전달할 수 있다.
-특별한 이유가 없다면 여러 개의 store를 만들기 보다는 한 개의 store에서 관리하는 걸 권장한다.
+`createStore`라는 함수를 통해, 생성할 수 있으며 생성된 스토어 객체는 Provider를 통해 전달할 수 있다.
+특별한 이유가 없다면 여러 개의 스토어를 만들기 보다는 한 개의 스토어에서 관리하는 걸 권장한다.
 
 ```javascript
 /* index.js */
@@ -175,13 +175,13 @@ ReactDOM.render(
 );
 ```
 
-## Middleware
+## 미들웨어 (Middleware)
 
-Middleware는 Reducer가 Action 처리 하기 전 시점에서 실행된다.
+미들웨어는 리듀서가 액션을 처리 하기 전 시점에서 실행된다.
 주로 로그를 남기거나, 서버에 오류 전달, 라우팅 등을 위해 사용한다.
-그리고 Reducer와 달리 비동기 로직과 같은 부수 효과가 발생해도 괜찮다. 
+그리고 리듀서와 달리 비동기 로직과 같은 부수 효과가 발생해도 괜찮다. 
 
-Middleeware의 구조는 다음과 같다.
+미들웨어의 구조는 다음과 같다.
 
 ```javascript
 const middleware = (store) => (next) => (action) => {
@@ -190,9 +190,9 @@ const middleware = (store) => (next) => (action) => {
 ```
 
 `store`, `next`, `action` 세 개가 중첩된 구조로 이루어져 있으며, 스토어와 액션을 기반으로 작업을 진행한다.
-`next` 함수를 호출하면 다음 미들웨어 함수가 실행되고, 마지막 미들웨어까지 완료되면 Reducer 함수가 실행된다.
+`next` 함수를 호출하면 다음 미들웨어 함수가 실행되고, 마지막 미들웨어까지 완료되면 리듀서 함수가 실행된다.
 
-Middleware는 `createStore` 함수를 통해, store 객체를 생성할 때 설정할 수 있다.
+미들웨어는 `createStore` 함수를 통해, 스토어 객체를 생성할 때 설정할 수 있다.
 
 ```javascript
 import { createStore, applyMiddleware } from "redux";
@@ -215,7 +215,7 @@ createStore(
 
 ## 주의점
 
-모든 컴포넌트의 상태를 Store에서 관리하게 되면 코드가 오히려 기존보다 복잡해질 수 있으니, 간단한 상태값들은 컴포넌트에서 관리하고 공유가 필요하거나 저장해야 하는 상태값들을 Store에서 관리하는게 좋다고 생각한다.
+모든 컴포넌트의 상태를 스토어에서 관리하게 되면 코드가 오히려 기존보다 복잡해질 수 있으니, 간단한 상태값들은 컴포넌트에서 관리하고 공유가 필요하거나 저장해야 하는 상태값들을 스토어에서 관리하는게 좋다고 생각한다.
 
 또한 모든 프로젝트에서 Redux의 사용을 추천하는 것은 아니며, 필요한 경우에 사용하는 것을 권장한다.
 최근에는 Redux의 사용 추세가 줄어들고 있으며, `Recoil`과 `Jotai`등의 라이브러리를 사용한 프로젝트가 늘고 있으니 참고하길 바란다.

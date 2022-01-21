@@ -5,9 +5,9 @@ date: 2022-01-18
 
 ## 들어가며
 
-기존에는 컴포넌트에서 store의 상태값을 사용하기 위해서는 `connect` 함수의 `mapStateToProps`을 넘겨서 props를 사용하는 방식처럼 사용했다.
+기존에는 컴포넌트에서 스토어의 상태값을 사용하기 위해서는 `connect` 함수의 `mapStateToProps`을 넘겨서 props를 사용하는 방식처럼 사용했다.
 
-이제는 react-redux 7버전 이후로 나온 `useSelector` Hook을 사용해서, 손쉽게 store에 접근하고 상태값을 가지고 올 수 있게 됐다. 
+이제는 react-redux 7버전 이후로 나온 `useSelector` Hook을 사용해서, 손쉽게 스토어에 접근하고 상태값을 가지고 올 수 있게 됐다. 
 
 `useSelector`는 `mapStateToProps`과 다른점은 다음과 같다.
 
@@ -36,18 +36,11 @@ function UserList() {
 ```
 
 equalityFn는 필요한 경우 사용할 수 있으며, 렌더링 최적화를 위해 사용한다.
-true를 반환할 경우, 렌더링을 진행하지 않고 false를 반환하면 렌더링한다.
+이전 값과 다음 값을 인자로 받으며, `true`를 반환하면 렌더링을 진행하지 않고 `false`를 반환하면 렌더링한다.
 
 ```javascript
-import { useSelector } from "react-redux";
-
-function UserList() {
-  const users = useSelector(
-    (state) => state.users,
-    (prev, next) => {
-      ...
-    }
-  );
+function equalityFn(prev, next) {
+  ...
 }
 ```
 
@@ -140,4 +133,76 @@ function UserList() {
 
 ## selector 최적화 - equalityFn 사용
 
+다음과 같이 구조 분해 할당을 통해 상태를 가지고 올 경우, 상태의 값이 변경되지 않더라도 컴포넌트는 계속 렌더링 되는 것을 볼 수 있다.
+
+```javascript
+import { useSelector } from "react-redux";
+
+const { keyword, category, tag } = useSelector((state) => state.searchParams);
+```
+
+이러한 문제들을 해결하기 위해서는 `useSelector`의 두 번째 인자 `equalityFn`을 사용해야 한다.
+`equalityFn`에서는 이전 값과 다음 값을 사용할 수 있으며, 값을 비교하고 `true`를 반환해서 컴포넌트가 렌더링 되지 않도록 할 수 있다.
+
+```javascript
+const { keyword, category, tag } = useSelector(
+  (state) => state.searchParams,
+  (prev, next) => {
+    return (
+      prev.keyword === next.keyword &&
+      prev.category === next.category &&
+      prev.tag === next.tag
+    );
+  }
+);
+```
+
 ## selector 최적화 - shallowEqual 사용
+
+`equalityFn`을 사용해서, 직접 비교 코드를 작성하는 것은 어렵고, 매번 다른 코드를 작성하는 것은 유지보수 측면에서 좋지 않다.
+이런 경우, `react-redux`에서 제공하는 `shallowEqual` 함수를 사용하면 쉽게 이전 값과 다음 값을 비교할 수 있다.
+
+`shallowEqual`은 객체 안 최상단에 있는 값들을 비교해준다.
+예를 들어, 다음과 같이 `user`라는 객체가 있을 경우, `user.name`, `user.age`, `user.friends`, `user.school`까지는 비교하지만 `user.friends[0]` 혹은 `user.school.name`와 같이 더 깊은 곳에 있는 값들은 비교하지 않는다.
+
+```javascript
+const user = {
+  name: "user1",
+  age: 20,
+  friends: ["user2", "user3"],
+  school: {
+    name: "AA university",
+    location: "Seoul",
+  }
+};
+```
+
+`shallowEqual`는 다음과 같이 `useSelector`에서 사용할 수 있다.
+
+```javascript
+import { shallowEqual, useSelector } from "react-redux";
+
+const { keyword, category, tag } = useSelector(
+  (state) => state.searchParams,
+  shallowEqual
+);
+```
+
+## 주의점
+
+`useSelector`는 여러 번 사용하는게 성능면에서 이점을 가진다.
+
+```javascript
+const { keyword, category, tag } = useSelector(
+  (state) => state.searchParams
+);
+```
+
+예를 들어 같이 객체를 분해해서 사용하는 코드의 경우, equalityFn에서 비교하지 않는다면 컴포넌트는 계속 리렌더링 된다.
+다음과 같이 여러 번 사용해서, 상태를 가지고 오면 상태의 변경이 있을 경우에만 컴포넌트가 리렌더링 된다.
+
+```javascript
+const keyword = useSelector((state) => state.searchParams.keyword);
+const category = useSelector((state) => state.searchParams.category);
+const tag = useSelector((state) => state.searchParams.tag);
+```
