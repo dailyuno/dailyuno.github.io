@@ -64,6 +64,8 @@ for (let value of numbers) {
 이터레이터 프로토콜을 준수한 객체에 대해 이터레이터라 하며, 이터레이터는 next 메소드를 가진다.
 next 메소드는 이터러블을 순회할 수 있으며 value와 done 프로퍼티를 가진 객체를 반환한다.
 
+즉 next 메소드를 통해 이터러블의 값에 접근할 수 있으며, value와 done을 받을 수 있는 객체라고 보면 된다.
+
 ```javascript
 const numbers = [1, 2];
 
@@ -88,12 +90,18 @@ console.log(iterator.next()); // { value: 2, done: false }
 console.log(iterator.next()); // { value: undefined, done: true }
 ```
 
-## 커스텀 이터러블 & 이터레이터
+## 커스텀 이터러블
 
 일반 객체는 `Symbol.iterator` 메소드를 상속 받지 않는다. 즉 for ... of문과 spread 문법을 사용할 수 없다.
 일반 객체가 해당 문법들을 사용하기 위해서는 이터레이션 프로토콜을 준수하도록 구현해야 한다.
 
-다음은 이터레이션 프로토콜을 준수한 객체를 만든 코드로 1부터 5까지 값이 1씩 증가한다.
+### 이터러블 구현
+
+다음은 이터레이션 프로토콜을 준수한 객체를 만든 코드로 값이 1씩 증가하며, 5가 넘어갈 경우 종료된다.
+`Symbol.iterator`는 next 메소드를 가지는 이터레이터를 반환해야 하며, next 메소드는 value와 done 프로퍼티를 반환하도록 만들어야 한다. 
+
+for ... of문에서는 done 프로퍼티가 true가 될 때까지 반복하고, false가 되면 종료한다. 
+done 프로퍼티를 누락하거나 true 값을 설정하지 않아서, 무한 반복 되는 일이 없도록 주의해야 한다.
 
 ```javascript
 const counter = {
@@ -112,7 +120,7 @@ const counter = {
 };
 ```
 
-이렇게 만들어진 `counter` 객체는 다른 이터러블과 동일하게 사용할 수 있다.
+이터레이션 프로토콜을 준수하여 구현한 `counter` 객체는 다른 이터러블과 동일하게 for ... of문과 spread 문법 등을 사용할 수 있다.
 
 ```javascript
 for (let value of counter) {

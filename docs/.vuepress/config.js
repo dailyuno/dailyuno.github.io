@@ -28,6 +28,7 @@ module.exports = {
           "/javascript/scope.md",
           "/javascript/promise.md",
           "/javascript/async-await.md",
+          "/javascript/iteration-protocols.md",
         ],
       },
       {
@@ -61,6 +62,7 @@ module.exports = {
           "/redux/use-dispatch.md",
           "/redux/use-selector.md",
           "/redux/reselect.md",
+          "/redux/redux-thunk.md",
         ],
       },
       {
