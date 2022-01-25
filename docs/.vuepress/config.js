@@ -27,8 +27,9 @@ module.exports = {
         children: [
           "/javascript/scope.md",
           "/javascript/promise.md",
-          "/javascript/async-await.md",
           "/javascript/iteration-protocols.md",
+          "/javascript/generator.md",
+          "/javascript/async-await.md",
         ],
       },
       {
