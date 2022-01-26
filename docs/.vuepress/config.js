@@ -26,6 +26,7 @@ module.exports = {
         link: "/javascript/scope.md",
         children: [
           "/javascript/scope.md",
+          "/javascript/this.md",
           "/javascript/promise.md",
           "/javascript/iteration-protocols.md",
           "/javascript/generator.md",
