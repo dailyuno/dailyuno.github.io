@@ -1,4 +1,5 @@
 module.exports = {
+  title: "dailyuno Tech Blog",
   markdown: {
     extractHeaders: {
       level: [],
@@ -25,9 +26,10 @@ module.exports = {
         text: "Javascript",
         link: "/javascript/scope.md",
         children: [
+          "/javascript/prototype.md",
+          "/javascript/this.md",
           "/javascript/scope.md",
           "/javascript/hoisting.md",
-          "/javascript/this.md",
           "/javascript/promise.md",
           "/javascript/iteration-protocols.md",
           "/javascript/generator.md",
