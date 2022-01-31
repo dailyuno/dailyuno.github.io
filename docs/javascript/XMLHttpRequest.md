@@ -254,17 +254,12 @@ POST 방식은 GET 방식과 거의 유사하지만 다른 점들이 존재한�
 ```javascript
 const req = new XMLHttpRequest();
 
-req.setRequestHeader("Content-Type", "application/json");
+req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
 req.addEventListener('load', e => {
   console.log(req.response);
 });
 
-const user = {
-  name: "홍길동",
-  age: 20
-};
-
 req.open("POST", url);
-req.send(JSON.stringify(user));
+req.send("name=user1&age=20");
 ```
