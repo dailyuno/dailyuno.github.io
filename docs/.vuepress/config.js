@@ -72,6 +72,11 @@ module.exports = {
         ],
       },
       {
+        text: "Web Technology",
+        link: "/web-technlogy/cors.md",
+        children: ["/web-technlogy/cors.md"],
+      },
+      {
         text: "Computer Science",
         link: "/computer-science/functional-programming.md",
         children: ["/computer-science/functional-programming.md"],
