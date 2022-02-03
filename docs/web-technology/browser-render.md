@@ -19,7 +19,7 @@ date: 2022-01-31
 브라우저는 크게 7가지로 구분되며, 다음과 같다.
 
 ![Browser Structure](../.vuepress/public/images/browser-structure.png)
-(출처: https://medium.com/@pdster/how-web-browsers-work-6385b9374375)
+(출처: [https://medium.com/@pdster/how-web-browsers-work-6385b9374375](https://medium.com/@pdster/how-web-browsers-work-6385b9374375))
 
 #### 1. 사용자 인터페이스 (User Interface)
 
