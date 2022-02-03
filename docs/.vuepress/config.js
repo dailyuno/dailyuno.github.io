@@ -27,6 +27,7 @@ module.exports = {
         link: "/javascript/scope.md",
         children: [
           "/javascript/event-loop.md",
+          "/javascript/queues.md",
           "/javascript/prototype.md",
           "/javascript/this.md",
           "/javascript/scope.md",

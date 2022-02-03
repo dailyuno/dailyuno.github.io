@@ -68,15 +68,15 @@ print();
 
 ![Javascript Engine Runtime](../.vuepress/public/images/javascript-engine-runtime.png)
 
-자바스크립트의 엔진과 외부의 런타임 환경들이 합쳐진 모습으로 이벤트 루프, 웹 API, Callback Queue가 존재한다.
+자바스크립트의 엔진과 외부의 런타임 환경들이 합쳐진 모습으로 이벤트 루프, 웹 API, 큐가 존재한다.
 각각의 요소들은 다음과 같은 역할을 가진다.
 
 - Web API: 브라우저에서 제공하는 API로 DOM 이벤트, setTimeout등을 비롯한 비동기 작업을 수행할 수 있도록 지원한다.
 
-- Queue: 비동기 작업으로 처리되어야 할 태스크들을 저장한다. 
+- 큐(Queue): 비동기 작업으로 처리되어야 할 태스크들을 저장한다. 
 이벤트 루프가 정해준 우선 순위에 맞게 처리된다.
 
-- 이벤트 루프(Event Loop): 콜스택과 Callback Queue의 상태를 확인하며, 콜스택이 비어있으면 Callback Queue의 태스크를 넘겨주는 역할을 한다.
+- 이벤트 루프(Event Loop): 콜스택과 큐의 상태를 확인하며, 콜스택이 비어있으면 큐의 태스크를 넘겨주는 역할을 한다.
 
 각각의 요소들이 어떻게 작동하는지에 대해서 알아보자.
 
@@ -93,15 +93,15 @@ print();
 
 ![Web API](https://res.cloudinary.com/practicaldev/image/fetch/s--d_n4m4HH--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_66%2Cw_880/https://devtolydiahallie.s3-us-west-1.amazonaws.com/gif2.1.gif)
 
-### 3. Queue 이동
+### 3. 큐 이동
 
-`setTimeout` 콜백 함수는 조건을 만족할 경우, 바로 콜스택으로 이동하지 않고 Queue로 이동하게 된다.
+`setTimeout` 콜백 함수는 조건을 만족할 경우, 바로 콜스택으로 이동하지 않고 큐로 이동하게 된다.
 
 ![Queue](https://res.cloudinary.com/practicaldev/image/fetch/s--MewGMdte--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_66%2Cw_880/https://devtolydiahallie.s3-us-west-1.amazonaws.com/gif3.1.gif)
 
 ### 4. 이벤트 루프
 
-이렇게 Queue로 이동 된 콜백 함수는 이벤트 루프에 의해서 처리된다.
+이렇게 큐로 이동 된 콜백 함수는 이벤트 루프에 의해서 처리된다.
 먼저 이벤트 루프가 콜스택이 비어있는지를 확인 한 후, 콜스택이 비어있을 경우에만 해당 콜백 함수를 추가한다.
 
 예제에서는 `setTimeout`를 제외한 다른 비동기 함수의 호출이 없어서, 
