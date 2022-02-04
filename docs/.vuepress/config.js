@@ -1,5 +1,6 @@
 module.exports = {
   title: "dailyuno Tech Blog",
+  head: [["link", { rel: "shortcut icon", href: "/favicons/favicon.ico" }]],
   markdown: {
     extractHeaders: {
       level: [],
