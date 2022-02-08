@@ -144,7 +144,7 @@ function timer(time) {
 }
 ```
 
-#### Promise.all
+### Promise.all
 
 `Promise.all`은 배열에 있는 모든 함수가 성공적으로 완료되거나, 한 개의 함수가 실패할 때까지 대기한다.
 
@@ -172,7 +172,7 @@ Promise.all([timer(1000), timer(1500), timer(0)])
   });
 ```
 
-#### Promise.allSettled
+### Promise.allSettled
 
 `Promise.allSettled`는 배열에 있는 모든 함수가 처리 될 때까지 대기한다.
 
@@ -215,7 +215,7 @@ Promise.allSettled([timer(1000), timer(1500), timer(0)])
   });
 ```
 
-#### Promise.any
+### Promise.any
 
 `Promise.any`는 이행한 `Promise` 처리를 위한 함수로, 배열에 있는 함수 중 하나라도 이행하면 실행된다.
 
@@ -257,7 +257,7 @@ Promise.any([timer(0), timer(0), timer(0)])
   });
 ```
 
-#### Promise.race
+### Promise.race
 
 `Promise.race`는 배열에 있는 함수들 중 하나라도 처리되면 실행된다.
 
