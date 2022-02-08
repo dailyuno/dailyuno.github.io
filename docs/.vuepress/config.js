@@ -35,6 +35,7 @@ module.exports = {
           "/javascript/hoisting.md",
           "/javascript/XMLHttpRequest.md",
           "/javascript/IndexedDB.md",
+          "/javascript/localStorage.md",
           "/javascript/promise.md",
           "/javascript/iteration-protocols.md",
           "/javascript/generator.md",
