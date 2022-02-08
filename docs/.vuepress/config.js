@@ -34,6 +34,7 @@ module.exports = {
           "/javascript/scope.md",
           "/javascript/hoisting.md",
           "/javascript/XMLHttpRequest.md",
+          "/javascript/IndexedDB.md",
           "/javascript/promise.md",
           "/javascript/iteration-protocols.md",
           "/javascript/generator.md",
