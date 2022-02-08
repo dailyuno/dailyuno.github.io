@@ -1,3 +1,8 @@
+---
+title: localStorage
+date: 2018-04-13
+---
+
 ## 들어가며
 
 localStorage는 사용자의 브라우저에 데이터를 저장할 수 있는 방법 중 하나이다. 
