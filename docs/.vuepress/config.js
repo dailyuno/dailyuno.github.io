@@ -43,6 +43,11 @@ module.exports = {
         ],
       },
       {
+        text: "Typescript",
+        link: "/typescript/init.md",
+        children: ["/typescript/init.md", "/typescript/basic-types.md"],
+      },
+      {
         text: "React",
         link: "/react/init.md",
         children: [
