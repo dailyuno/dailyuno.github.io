@@ -45,7 +45,18 @@ module.exports = {
       {
         text: "Typescript",
         link: "/typescript/init.md",
-        children: ["/typescript/init.md", "/typescript/basic-types.md"],
+        children: [
+          "/typescript/init.md",
+          "/typescript/type-annotation.md",
+          "/typescript/type-alias.md",
+          "/typescript/unions-and-intersections.md",
+          "/typescript/generic.md",
+          "/typescript/primitive-types.md",
+          "/typescript/special-types.md",
+          "/typescript/array-tuple.md",
+          "/typescript/enum.md",
+          "/typescript/enum-issue.md",
+        ],
       },
       {
         text: "React",
