@@ -49,6 +49,7 @@ module.exports = {
           "/typescript/init.md",
           "/typescript/type-annotation.md",
           "/typescript/type-alias.md",
+          "/typescript/type-assertion.md",
           "/typescript/unions-and-intersections.md",
           "/typescript/generic.md",
           "/typescript/primitive-types.md",
