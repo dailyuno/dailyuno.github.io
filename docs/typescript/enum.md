@@ -48,9 +48,9 @@ enum Day {
 
 ```typescript
 enum Status {
-  BadRequest = 400
-  Unauthorized = 401
-  Forbidden = 403
+  BadRequest = 400,
+  Unauthorized = 401,
+  Forbidden = 403,
   NotFound = 404
 }
 ```
