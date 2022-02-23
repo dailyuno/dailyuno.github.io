@@ -188,3 +188,30 @@ function getLogText(status: Status): string {
   }
 }
 ```
+
+## 타입 서술어 (type predicate)
+
+타입스크립트에서는 반환 타입에 `is` 키워드를 사용함으로써, 사용자 정의 타입 가드를 정의할 수 있다.
+
+```typescript
+function functionName(parameterName): parameterName is Type;
+```
+
+이를 타입 서술어라고 부르며, `parameterName`은 함수의 매개변수 이름이어야 한다.
+타입 서술어를 사용하는 경우에는 `boolean` 값을 반환해야 한다.
+
+다음과 같이 사용할 수 있다.
+
+```typescript
+interface Player {
+  attack(): void;
+}
+
+interface Enemy {
+  move(): void;
+}
+
+function isPlayer(obj: Player | Enemy): obj is Player {
+  return (obj as Player).attack !== undefined;
+}
+```
