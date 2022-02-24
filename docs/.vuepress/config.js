@@ -55,9 +55,11 @@ module.exports = {
           "/typescript/enum-issue.md",
           "/typescript/type-alias.md",
           "/typescript/type-assertion.md",
+          "/typescript/type-guard.md",
           "/typescript/unions-and-intersections.md",
           "/typescript/interface.md",
           "/typescript/generic.md",
+          "/typescript/class.md",
         ],
       },
       {
