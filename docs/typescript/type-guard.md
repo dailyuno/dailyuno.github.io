@@ -197,10 +197,10 @@ function getLogText(status: Status): string {
 function functionName(parameterName): parameterName is Type;
 ```
 
-이를 타입 서술어라고 부르며, `parameterName`은 함수의 매개변수 이름이어야 한다.
-타입 서술어를 사용하는 경우에는 `boolean` 값을 반환해야 한다.
+이를 타입 서술어라고 부르며, `parameterName`은 함수의 매개 변수 이름이어야 하며, 함수는 `boolean` 값을 반환해야 한다.
+타입스크립트에게 들어온 매개 변수가 특정 타입인지에 대한 여부를 알려주는 함수라고 보면 된다.
 
-다음과 같이 사용할 수 있다.
+타입 서술어는 다음과 같이 사용할 수 있다.
 
 ```typescript
 interface Player {
@@ -211,7 +211,30 @@ interface Enemy {
   move(): void;
 }
 
-function isPlayer(obj: Player | Enemy): obj is Player {
-  return (obj as Player).attack !== undefined;
+function isPlayer(user: Player | Enemy): user is Player {
+  return (user as Player).attack !== undefined;
 }
 ```
+
+`isPlayer` 함수는 `Player` 혹은 `Enemy`를 매개 변수로 허용하는데,
+매개 변수의 타입이 `Player`인지에 대해 메소드를 통해 확인하여 `boolean` 값을 반환한다.
+
+타입 서술어를 사용하지 않고, `if`문으로도 가능하다고 생각할 수도 있다.
+하지만 `if`문을 사용하여 코드를 작성할 경우, 다음과 같은 문제가 발생한다.
+
+```typescript
+let user: Player | Enemy = getUser();
+
+if ((user as Player).attack) {
+  user.attack();
+  // Property 'attack' does not exist on type 'Enemy'.
+} else {
+  user.move();
+  // Property 'move' does not exist on type 'Player'.
+}
+```
+
+우리는 `user`에 `attack` 메소드가 존재할 경우, `Player` 타입이라는 걸 알 수 있다.
+하지만 타입스크립트는 `user`에 `Player`와 `Enemy` 둘 중 어떤 타입이 올지 모르기에 오류가 발생한다.
+
+즉 우리는 타입스크립트에게 어떤 타입이라고 명시하여 오류를 방지해야 하는데, 명시하기 위한 방법이 타입 서술어라고 볼 수 있다.
