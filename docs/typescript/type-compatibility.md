@@ -79,7 +79,9 @@ const user: User = animal;
 - 같은 이름의 필드와 메소드는 접근 제어자는 `public`이어야 한다.
 - `get`과 `set` 메소드가 있는 경우, 동일한 형태로 존재해야 한다.
 
-접근 제어자가 `public`이 아닐 경우, 다음과 같이 에러가 발생한다.
+### 접근 제어자 - private
+
+접근 제어자가 `private`일 경우, 다음과 같이 에러가 발생한다.
 
 ```typescript
 class Animal {
@@ -109,6 +111,8 @@ const animal: Animal = user;
 접근 제어자가 `private`일 경우, 호환되지 않는 이유는 다음과 같다.
 타입스크립트는 구조를 기준으로 호환 여부를 판단하는데, `User`에서 선언 된 `private` 필드 `id`는 `Animal`에서 선언된 것이 아니기에 다른 구조라고 판단한다.
 
+### 접근 제어자 - protected
+
 접근 제어자 `protected`는 `private`과 비슷하게 동작하지만 살짝 다른 부분이 존재한다. 
 상속 받은 클래스는 호환이 가능하다.
 
@@ -137,14 +141,25 @@ const animal: Animal = user;
 
 하지만 연관 관계가 없는 클래스끼리의 호환은 `private`으로 선언된 것과 동일하다고 볼 수 있다.
 
-`static`의 경우, 인스턴스에 영향을 미치지 않으므로 동일하게 존재할 필요는 없다.
-`readonly`도 마찬가지로 필드의 형태에는 상관 없으므로 동일하지 않아도 된다.
+### 정적 필드와 메소드
+
+`static` 키워드를 통해 정적 필드와 메소드를 선언한 경우,
+이는 인스턴스에 영향을 미치지 않으므로 신경쓰지 않아도 무방하다.
 
 ```typescript
 class Animal {
   id: string;
-  readonly name: string;
   static types: string[];
+
+  constructor(id: string) {
+    this.id = id;
+  }
+}
+
+class User {
+  id: string;
+  name: string;
+  static items: string[];
 
   constructor(id: string, name: string) {
     this.id = id;
@@ -152,21 +167,36 @@ class Animal {
   }
 }
 
-class User {
-  readonly id: string;
-  name: string;
-  weight: number;
-  height: number;
-
-  constructor(id: string, name: string, weight: number, height: number) {
-    this.id = id;
-    this.name = name;
-    this.weight = weight;
-    this.height = height;
-  }
-}
-
-const user: User = new User("user1", "홍길동", 75, 180);
+const user: User = new User("user1", "홍길동");
 const animal: Animal = user;
 ```
 
+실제로 위 코드를 보면 `Animal`과 `User` 클래스에 서로 다른 정적 필드가 존재한다.
+하지만 문제 없이 호환되는 것을 볼 수 있다.
+
+### readonly
+
+`readonly`도 마찬가지로 구조에 영향을 미치지 않으므로 동일하지 않아도 된다.
+
+```typescript
+class Animal {
+  readonly id: string;
+
+  constructor(id: string) {
+    this.id = id;
+  }
+}
+
+class User {
+  id: string;
+  readonly name: string;
+
+  constructor(id: string, name: string) {
+    this.id = id;
+    this.name = name;
+  }
+}
+
+const user: User = new User("user1", "홍길동");
+const animal: Animal = user;
+```
