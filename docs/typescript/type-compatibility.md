@@ -18,6 +18,56 @@ C#, 자바와 같은 이름을 기준으로 타입을 지정하는 언어를 명
 구조적 서브 타이핑은 앞서 이야기했던 것처럼 구조를 기준으로 타입의 관계를 확인하는데, 쉽게 생각하면 부모 클래스와 자식 클래스 관계라고 볼 수 있다.
 타입 호환성은 어떤 타입이 다른 타입과 호환이 되는지 판단하는 것이라고 볼 수 있다.
 
+## 함수 타입 호환성
+
+먼저 함수는 호출 시점에 문제가 없는 경우 할당이 가능하다.
+다음 조건을 만족할 때, 함수 A는 함수 B에 할당이 가능하다.
+
+- 함수 A의 매개 변수는 B의 매개 변수보다 같거나 적어야 한다.
+- 같은 위치의 매개 변수 타입은 동일해야 한다.
+- 함수 A와 함수 B의 반환 타입은 동일해야 한다.
+
+```typescript
+type Sum = (a: number, b: number) => number;
+type Squared = (a: number) => number;
+
+let sum: Sum = (a: number, b: number) => {
+  return a + b;
+};
+
+let squared: Squared = (a: number) => {
+  return a * a;
+};
+
+sum = squared; // 조건 충족
+squared = sum; 
+// Type 'Sum' is not assignable to type 'Squared'.
+```
+
+함수의 매개 변수가 더 적은 경우에는 조건을 충족한다고 판단하지만 더 많은 경우에는 조건을 충족하지 못 한다고 판단하여 에러가 발생한다.
+이는 자바스크립트의 함수 특성과 비슷하다고 볼 수 있다.
+
+예를 들어, 배열이 존재한다고 가정하고 `foreach` 메소드를 통해 반복한다고 가정해보자.
+
+```typescript
+const items: number[] = [1, 2, 3];
+
+items.forEach((item, index, array) => { ... });
+items.forEach((item, index) => { ... });
+items.forEach((item) => { ... });
+```
+
+위 코드를 보면 알겠지만 `forEach` 메소드는 세 개의 매개 변수를 허용하는데, 이를 모두 사용하지 않아도 정상적으로 작동한다.
+
+다만 허용하는 매개 변수보다 더 많은 매개 변수를 사용하려고 할 경우, 타입스크립트에서는 잘못되었다고 판단하고 에러가 발생한다.
+
+```typescript
+items.forEach((item, index, array, temp) => {});
+// Parameter 'temp' implicitly has an 'any' type, 
+// but a better type may be inferred from usage.
+// temp는 허용하지 않으므로 undefined 값을 가진다.
+```
+
 ## 인터페이스 타입 호환성
 
 다음과 같은 조건을 만족할 경우, 인터페이스 A는 다른 인터페이스 B에 할당이 가능하다.
@@ -171,12 +221,11 @@ const user: User = new User("user1", "홍길동");
 const animal: Animal = user;
 ```
 
-실제로 위 코드를 보면 `Animal`과 `User` 클래스에 서로 다른 정적 필드가 존재한다.
-하지만 문제 없이 호환되는 것을 볼 수 있다.
+실제로 위 코드를 보면 `Animal`과 `User` 클래스에 서로 다른 정적 필드가 존재하지만 문제 없이 호환되는 것을 볼 수 있다.
 
 ### readonly
 
-`readonly`도 마찬가지로 구조에 영향을 미치지 않으므로 동일하지 않아도 된다.
+`readonly`도 `static` 키워드와 마찬가지로 구조 혹은 접근 범위등에 영향을 미치지 않으므로 신경쓰지 않아도 된다.
 
 ```typescript
 class Animal {
