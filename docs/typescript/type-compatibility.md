@@ -249,3 +249,53 @@ class User {
 const user: User = new User("user1", "홍길동");
 const animal: Animal = user;
 ```
+
+## 타입 호환성과 함수
+
+앞서 타입 호환성에 대해 설명했는데, 이를 활용하면 다음과 같은 함수의 호출이 가능하다.
+
+```typescript
+class Rect {
+  draw(): void {}
+}
+
+class Circle {
+  draw(): void {}
+}
+
+function render(shape: Rect) {
+  shape.draw();
+}
+
+let rect: Rect = new Rect();
+let circle: Circle = new Circle();
+
+render(rect);
+render(circle);
+```
+
+`render` 함수를 보면 `Rect` 타입을 매개 변수로 허용하는데, 구조 기반 타입을 지원하는 타입스크립트 특성상 `Rect` 타입이 아닌 다른 타입을 전달하더라도 에러가 발생하지는 않는다.
+
+`Rect`와 `Circle`은 서로 다른 타입이라고 볼 수 있는데, 두 클래스 모두 `draw` 메소드를 가짐에 따라 서로 호환이 가능하다.
+
+앞서 작성된 클래스를 상속 받도록 설계하면 다음과 같이 만들 수 있다.
+
+```typescript
+class Shape {
+  draw(): void {}
+}
+
+class Rect extends Shape {}
+
+class Circle extends Shape {}
+
+function draw(shape: Shape) {
+  shape.draw();
+}
+
+let rect: Rect = new Rect();
+let circle: Circle = new Circle();
+
+draw(rect);
+draw(circle);
+```
