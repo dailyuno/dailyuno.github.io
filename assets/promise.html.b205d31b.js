@@ -1,0 +1,1 @@
+const e={key:"v-f8ded232",path:"/javascript/promise.html",title:"Promise",lang:"en-US",frontmatter:{title:"Promise",date:"2022-01-12T00:00:00.000Z"},excerpt:"",headers:[],git:{updatedTime:164603158e4,contributors:[{name:"dailyuno",email:"34119537+dailyuno@users.noreply.github.com",commits:1}]},filePathRelative:"javascript/promise.md"};export{e as data};

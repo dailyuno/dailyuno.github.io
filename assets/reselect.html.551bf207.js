@@ -1,0 +1,1 @@
+const e={key:"v-8d8e2454",path:"/redux/reselect.html",title:"reselect",lang:"en-US",frontmatter:{title:"reselect",date:"2022-01-21T00:00:00.000Z"},excerpt:"",headers:[],git:{updatedTime:164603158e4,contributors:[{name:"dailyuno",email:"34119537+dailyuno@users.noreply.github.com",commits:1}]},filePathRelative:"redux/reselect.md"};export{e as data};

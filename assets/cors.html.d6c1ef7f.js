@@ -1,0 +1,1 @@
+const e={key:"v-3a1f10db",path:"/web-technology/cors.html",title:"CORS",lang:"en-US",frontmatter:{title:"CORS",date:"2022-01-30T00:00:00.000Z"},excerpt:"",headers:[],git:{updatedTime:164603158e4,contributors:[{name:"dailyuno",email:"34119537+dailyuno@users.noreply.github.com",commits:1}]},filePathRelative:"web-technology/cors.md"};export{e as data};

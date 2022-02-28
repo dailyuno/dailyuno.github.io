@@ -1,0 +1,1 @@
+const t={key:"v-48216b8e",path:"/javascript/scope.html",title:"\uC2A4\uCF54\uD504",lang:"en-US",frontmatter:{title:"\uC2A4\uCF54\uD504",date:"2022-01-04T00:00:00.000Z"},excerpt:"",headers:[],git:{updatedTime:164603158e4,contributors:[{name:"dailyuno",email:"34119537+dailyuno@users.noreply.github.com",commits:1}]},filePathRelative:"javascript/scope.md"};export{t as data};

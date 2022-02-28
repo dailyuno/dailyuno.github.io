@@ -1,0 +1,1 @@
+const e={key:"v-ff9520da",path:"/typescript/generic.html",title:"\uC81C\uB124\uB9AD",lang:"en-US",frontmatter:{title:"\uC81C\uB124\uB9AD",date:"2022-02-15T00:00:00.000Z"},excerpt:"",headers:[],git:{updatedTime:164603158e4,contributors:[{name:"dailyuno",email:"34119537+dailyuno@users.noreply.github.com",commits:1}]},filePathRelative:"typescript/generic.md"};export{e as data};

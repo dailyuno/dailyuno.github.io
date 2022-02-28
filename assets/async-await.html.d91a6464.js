@@ -1,0 +1,1 @@
+const a={key:"v-2a3e8a06",path:"/javascript/async-await.html",title:"Async & Await",lang:"en-US",frontmatter:{title:"Async & Await",date:"2022-01-13T00:00:00.000Z"},excerpt:"",headers:[],git:{updatedTime:164603158e4,contributors:[{name:"dailyuno",email:"34119537+dailyuno@users.noreply.github.com",commits:1}]},filePathRelative:"javascript/async-await.md"};export{a as data};

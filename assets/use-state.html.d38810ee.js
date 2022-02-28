@@ -1,0 +1,1 @@
+const t={key:"v-d0e7d914",path:"/react/hooks/use-state.html",title:"useState",lang:"en-US",frontmatter:{title:"useState",date:"2022-01-05T00:00:00.000Z"},excerpt:"",headers:[],git:{updatedTime:164603158e4,contributors:[{name:"dailyuno",email:"34119537+dailyuno@users.noreply.github.com",commits:1}]},filePathRelative:"react/hooks/use-state.md"};export{t as data};

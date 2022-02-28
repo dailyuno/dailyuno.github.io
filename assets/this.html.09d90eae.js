@@ -1,0 +1,1 @@
+const t={key:"v-62ca9b52",path:"/javascript/this.html",title:"this",lang:"en-US",frontmatter:{title:"this",date:"2022-01-26T00:00:00.000Z"},excerpt:"",headers:[],git:{updatedTime:164603158e4,contributors:[{name:"dailyuno",email:"34119537+dailyuno@users.noreply.github.com",commits:1}]},filePathRelative:"javascript/this.md"};export{t as data};

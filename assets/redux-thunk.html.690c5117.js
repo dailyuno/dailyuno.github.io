@@ -1,0 +1,1 @@
+const e={key:"v-3e142608",path:"/redux/redux-thunk.html",title:"redux-thunk",lang:"en-US",frontmatter:{title:"redux-thunk",date:"2022-01-21T00:00:00.000Z"},excerpt:"",headers:[],git:{updatedTime:164603158e4,contributors:[{name:"dailyuno",email:"34119537+dailyuno@users.noreply.github.com",commits:1}]},filePathRelative:"redux/redux-thunk.md"};export{e as data};

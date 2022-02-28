@@ -1,0 +1,1 @@
+const e={key:"v-52287d9a",path:"/javascript/IndexedDB.html",title:"IndexedDB",lang:"en-US",frontmatter:{title:"IndexedDB",date:"2018-04-11T00:00:00.000Z"},excerpt:"",headers:[],git:{updatedTime:164603158e4,contributors:[{name:"dailyuno",email:"34119537+dailyuno@users.noreply.github.com",commits:1}]},filePathRelative:"javascript/IndexedDB.md"};export{e as data};

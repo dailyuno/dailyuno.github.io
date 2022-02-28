@@ -1,0 +1,1 @@
+const t={key:"v-ccf41b96",path:"/html/tags.html",title:"\uD0DC\uADF8",lang:"en-US",frontmatter:{title:"\uD0DC\uADF8",date:"2021-05-08T00:00:00.000Z"},excerpt:"",headers:[],git:{updatedTime:164603158e4,contributors:[{name:"dailyuno",email:"34119537+dailyuno@users.noreply.github.com",commits:1}]},filePathRelative:"html/tags.md"};export{t as data};

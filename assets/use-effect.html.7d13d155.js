@@ -1,0 +1,1 @@
+const e={key:"v-99f5f1cc",path:"/react/hooks/use-effect.html",title:"useEffect",lang:"en-US",frontmatter:{title:"useEffect",date:"2022-01-05T00:00:00.000Z"},excerpt:"",headers:[],git:{updatedTime:164603158e4,contributors:[{name:"dailyuno",email:"34119537+dailyuno@users.noreply.github.com",commits:1}]},filePathRelative:"react/hooks/use-effect.md"};export{e as data};

@@ -1,0 +1,1 @@
+const t={key:"v-6bc5a841",path:"/react/hooks/init.html",title:"Hooks\uC774\uB780?",lang:"en-US",frontmatter:{title:"Hooks\uC774\uB780?",date:"2022-01-05T00:00:00.000Z"},excerpt:"",headers:[],git:{updatedTime:164603158e4,contributors:[{name:"dailyuno",email:"34119537+dailyuno@users.noreply.github.com",commits:1}]},filePathRelative:"react/hooks/init.md"};export{t as data};

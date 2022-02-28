@@ -1,0 +1,1 @@
+const a={key:"v-6739ada0",path:"/javascript/localStorage.html",title:"localStorage",lang:"en-US",frontmatter:{title:"localStorage",date:"2018-04-13T00:00:00.000Z"},excerpt:"",headers:[],git:{updatedTime:164603158e4,contributors:[{name:"dailyuno",email:"34119537+dailyuno@users.noreply.github.com",commits:1}]},filePathRelative:"javascript/localStorage.md"};export{a as data};
