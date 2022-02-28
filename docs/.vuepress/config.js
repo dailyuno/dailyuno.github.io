@@ -60,6 +60,8 @@ module.exports = {
           "/typescript/interface.md",
           "/typescript/generic.md",
           "/typescript/class.md",
+          "/typescript/type-compatibility.md",
+          "/typescript/type-relationship.md",
         ],
       },
       {
